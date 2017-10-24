@@ -6,10 +6,6 @@ import io.swagger.client.api.QuotesApi;
 import io.swagger.client.model.QueryResponse;
 import io.swagger.client.model.Quote;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args ) throws ApiException {

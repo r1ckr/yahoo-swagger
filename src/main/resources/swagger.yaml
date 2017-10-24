@@ -3,20 +3,17 @@ info:
   title: Yahoo APIs
   description: Yahoo Swagger API definition
   version: "1.0.0"
-# the domain of the service
 host: query.yahooapis.com
-# array of all schemes that your API supports
 schemes:
   - https
-# will be prefixed to all paths
 basePath: /v1
 produces:
   - application/json
 paths:
   /public/yql:
     get:
-      summary: Yahoo Query endpoint
-      description: "Description of this...."
+      summary: Yahoo Query public endpoint
+      description: "This is the public endpoint for the YQL API"
       parameters:
         - name: q
           in: query
@@ -30,12 +27,12 @@ paths:
           type: string
         - name: env
           in: query
-          description: "Value should be: store://datatables.org/alltableswithkeys"
+          description: "Environment to execute, for community tables it should be: store://datatables.org/alltableswithkeys"
           required: true
           type: string
         - name: callback
           in: query
-          description: "Callback to execute when query is executed"
+          description: "Callback when query is executed"
           required: false
           type: string
       tags:
@@ -49,7 +46,7 @@ paths:
         default:
           description: Unexpected error
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ErrorDefinition'
 
 definitions:
   Quote:
@@ -57,7 +54,7 @@ definitions:
     properties:
       symbol:
         type: string
-        description: "Symbol of the currency"
+        description: "Symbol of the Quote, eg AAPL or USDEUR=X"
       AverageDailyVolume:
         type: number
         format: double
@@ -65,37 +62,37 @@ definitions:
       Change:
         type: number
         format: double
-        description: ""
+        description: "How much has it changed since last day"
       DaysLow:
         type: number
         format: double
-        description: ""
+        description: "Lowest value for the day"
       DaysHigh:
         type: number
         format: double
-        description: ""
+        description: "Highest value for the day"
       YearLow:
         type: number
         format: double
-        description: ""
+        description: "Lowest value for the year"
       YearHigh:
         type: number
         format: double
-        description: ""
+        description: "Highest value for the year"
       MarketCapitalization:
         type: number
         format: double
-        description: ""
+        description: "Total dollar market value"
       LastTradePriceOnly:
         type: number
         format: double
-        description: ""
+        description: "Current value"
       DaysRange:
         type: string
-        description: ""
+        description: "The min - max range"
       Name:
         type: string
-        description: ""
+        description: "Name of the company or exchange, eg: Apple Inc or USD/EUR"
       Volume:
         type: integer
         format: int32
@@ -131,31 +128,17 @@ definitions:
     properties:
       query:
         $ref: '#/definitions/Query'
-  Product:
+  ErrorDefinition:
     type: object
     properties:
-      product_id:
-        type: string
-        description: Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
-      description:
-        type: string
-        description: Description of product.
-      display_name:
-        type: string
-        description: Display name of product.
-      capacity:
-        type: string
-        description: Capacity of product. For example, 4 people.
-      image:
-        type: string
-        description: Image URL representing the product.
+      error:
+        $ref: '#/definitions/Error'
   Error:
     type: object
     properties:
-      code:
-        type: integer
-        format: int32
-      message:
+      lang:
         type: string
-      fields:
+      diagnostics:
+        type: string
+      description:
         type: string
