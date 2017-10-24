@@ -1,4 +1,4 @@
-#Yahoo Query API by Swagger 
+# Yahoo Query API by Swagger 
 
 This is a sample project with a swagger file containing the info for the Yahoo Query API
 
