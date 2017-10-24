@@ -1,0 +1,161 @@
+swagger: "2.0"
+info:
+  title: Yahoo APIs
+  description: Yahoo Swagger API definition
+  version: "1.0.0"
+# the domain of the service
+host: query.yahooapis.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /public/yql:
+    get:
+      summary: Yahoo Query endpoint
+      description: "Description of this...."
+      parameters:
+        - name: q
+          in: query
+          description: "Query to execute"
+          required: true
+          type: string
+        - name: format
+          in: query
+          description: "Return Format, can be json or xml"
+          required: true
+          type: string
+        - name: env
+          in: query
+          description: "Value should be: store://datatables.org/alltableswithkeys"
+          required: true
+          type: string
+        - name: callback
+          in: query
+          description: "Callback to execute when query is executed"
+          required: false
+          type: string
+      tags:
+        - Quotes
+      responses:
+        200:
+          description: "A Query result object"
+          schema:
+            type: object
+            $ref: '#/definitions/QueryResponse'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Quote:
+    type: object
+    properties:
+      symbol:
+        type: string
+        description: "Symbol of the currency"
+      AverageDailyVolume:
+        type: number
+        format: double
+        description: ""
+      Change:
+        type: number
+        format: double
+        description: ""
+      DaysLow:
+        type: number
+        format: double
+        description: ""
+      DaysHigh:
+        type: number
+        format: double
+        description: ""
+      YearLow:
+        type: number
+        format: double
+        description: ""
+      YearHigh:
+        type: number
+        format: double
+        description: ""
+      MarketCapitalization:
+        type: number
+        format: double
+        description: ""
+      LastTradePriceOnly:
+        type: number
+        format: double
+        description: ""
+      DaysRange:
+        type: string
+        description: ""
+      Name:
+        type: string
+        description: ""
+      Volume:
+        type: integer
+        format: int32
+        description: ""
+      StockExchange:
+        type: string
+        description: ""
+  Query:
+    type: object
+    properties:
+      count:
+        type: integer
+        format: int32
+        description: "The query result count"
+      created:
+        type: string
+        format: date-time
+        description: "The execution date"
+      lang:
+        type: string
+        description: "Response language"
+      results:
+        $ref: '#/definitions/QuoteResults'
+  QuoteResults:
+    type: object
+    properties:
+      quote:
+        type: array
+        items:
+          $ref: '#/definitions/Quote'
+  QueryResponse:
+    type: object
+    properties:
+      query:
+        $ref: '#/definitions/Query'
+  Product:
+    type: object
+    properties:
+      product_id:
+        type: string
+        description: Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
+      description:
+        type: string
+        description: Description of product.
+      display_name:
+        type: string
+        description: Display name of product.
+      capacity:
+        type: string
+        description: Capacity of product. For example, 4 people.
+      image:
+        type: string
+        description: Image URL representing the product.
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
