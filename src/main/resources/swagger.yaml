@@ -12,6 +12,7 @@ produces:
 paths:
   /public/yql:
     get:
+      operationId: executeYql
       summary: Yahoo Query public endpoint
       description: "This is the public endpoint for the YQL API"
       parameters:
